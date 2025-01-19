@@ -364,6 +364,60 @@ end
         spoke = PulseDesigner.radial_base(FOV, N, sys)
         @test spoke.DEF["Δθ"] ≈ π / Nspokes
     end
+    @testset "design" begin
+        # trapezoid
+        duration = 10
+        amplitude = 5
+        grad = PulseDesigner.trapezoid(; duration, amplitude)
+        seq = Sequence()
+        seq += grad
+        @test true
+
+        # arbitrary_grad
+        t = range(0, 1; length=20)
+        waveform = sin.(2π * t)
+        grad = PulseDesigner.arbitrary_grad(waveform)
+        seq = Sequence()
+        seq += grad
+        @test true
+
+        # block_pulse
+        flip_angle = π / 2
+        duration = 0.001
+        rf, delay = PulseDesigner.block_pulse(flip_angle; duration)
+        seq = Sequence()
+        seq += rf
+        @test true
+
+        # sinc_pulse
+        flip_angle = π / 2
+        duration = 0.001
+        slice_thickness = 0.001
+        time_bw_product = 4
+        rf, gz, gzr, dly = PulseDesigner.sinc_pulse(flip_angle; duration, time_bw_product, slice_thickness)
+        seq = Sequence([Grad(0,0); Grad(0,0); gz;;], [rf;;])
+        seq += Sequence([Grad(0,0); Grad(0,0); gzr;;])
+        @test true
+
+        # arbitrary_rf
+        flip = π / 2
+        slice_thickness = 0.001
+        time_bw_product = 4
+        t = range(0, 0.5; length=20)
+        signal = sin.(2π * t)
+        rf, gz, gzr, dly = PulseDesigner.arbitrary_rf(signal, flip; time_bw_product, slice_thickness)
+        seq = Sequence([Grad(0,0); Grad(0,0); gz;;], [rf;;])
+        seq += Sequence([Grad(0,0); Grad(0,0); gzr;;])
+        @test true
+
+        # make_adc
+        num_samles = 10
+        duration = 0.001
+        adc = PulseDesigner.make_adc(num_samles; duration)
+        seq = Sequence()
+        seq += adc
+        @test true
+    end
 end
 
 @testitem "Motion" tags=[:base] begin

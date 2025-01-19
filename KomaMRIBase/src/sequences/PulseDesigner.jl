@@ -6,6 +6,11 @@ A module to define different pulse sequences.
 module PulseDesigner
 using ..KomaMRIBase
 
+include("RF/block_pulse.jl")
+include("RF/sinc_pulse.jl")
+include("Grad/design.jl")
+include("ADC/design.jl")
+
 """
     seq = RF_hard(B1, T, sys; G=[0, 0, 0], Δf=0)
 
