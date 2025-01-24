@@ -36,7 +36,7 @@ ProgressMeter = "1"
 Reexport = "1"
 ThreadsX = "0.1"
 julia = "1.10"
-oneAPI = "1"
+oneAPI = "1, 2"
 
 [workspace]
 projects = ["test"]
