@@ -4,6 +4,7 @@ authors = ["Carlos Castillo Passi <cncastillo@uc.cl>"]
 version = "0.9.0"
 
 [deps]
+AcceleratedKernels = "6a4ca0a5-0e36-4168-a932-d9be78d558f1"
 Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
 Functors = "d9f16b24-f501-4c13-a1f2-28368ffc5196"
 KernelAbstractions = "63c18a36-062a-441e-b654-da1e3ab1ce7c"
@@ -26,6 +27,7 @@ KomaoneAPIExt = "oneAPI"
 
 [compat]
 AMDGPU = "0.9, 1"
+AcceleratedKernels = "0.2.2"
 Adapt = "3, 4"
 CUDA = "3, 4, 5"
 Functors = "0.4, 0.5"

@@ -35,6 +35,7 @@ function run_spin_precession!(
     sig::AbstractArray{Complex{T}},
     M::Mag{T},
     sim_method::BlochDict,
+    groupsize,
     backend::KA.Backend,
     prealloc::PreallocResult
 ) where {T<:Real}

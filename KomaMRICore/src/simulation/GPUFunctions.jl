@@ -1,5 +1,7 @@
 const LOADED_BACKENDS = Ref{Vector{KA.GPU}}([])
 const BACKEND = Ref{Union{KA.Backend,Nothing}}(nothing)
+const DEFAULT_PRECESSION_GROUPSIZE = 32
+const DEFAULT_EXCITATION_GROUPSIZE = 256
 
 device_name(backend) = @error "device_name called with invalid backend type $(typeof(backend))"
 isfunctional(::KA.CPU) = true
@@ -10,9 +12,12 @@ name(::KA.CPU) = "CPU"
 set_device!(backend, val) = @error "set_device! called with invalid parameter types: '$(typeof(backend))', '$(typeof(val))'" 
 set_device!(val) = set_device!(get_backend(true), val)
 
-#oneAPI.jl doesn't support cis (https://github.com/JuliaGPU/oneAPI.jl/pull/443), so
-#for now we use a custom function for each backend to implement
-function _cis end
+#Copied from AcceleratedKernels.jl: https://github.com/JuliaGPU/AcceleratedKernels.jl/blob/00a9c0e7a36d6e02a51dbd13032a9165caab7909/src/utils.jl#L34
+struct TypeWrap{T} end
+TypeWrap(T) = TypeWrap{T}()
+Base.:*(x::Number, ::TypeWrap{T}) where T = T(x)
+
+const u16 = TypeWrap(UInt16)
 
 """
     get_backend(use_gpu)

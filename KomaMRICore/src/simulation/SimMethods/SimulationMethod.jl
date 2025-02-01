@@ -27,25 +27,15 @@ end
 """Stores pre-allocated arrays for use in run_spin_precession! and run_spin_excitation!"""
 abstract type PreallocResult{T<:Real} end
 
-"""Stores information precalculated before the simulation objects are moved to the GPU."""
-abstract type PrecalcResult{T<:Real} end
-
 """Default preallocation struct, stores nothing."""
 struct DefaultPrealloc{T} <: PreallocResult{T} end
 
 Base.view(p::PreallocResult, i::UnitRange) = p
-prealloc_block(p::PreallocResult, i::Integer) = p
-
-"""Default precalculation struct, stores nothing."""
-struct DefaultPrecalc{T} <: PrecalcResult{T} end
 
 """Default preallocation function."""
-prealloc(sim_method::SimulationMethod, backend::KA.Backend, obj::Phantom{T}, M::Mag{T}, max_block_length::Integer, precalc) where {T<:Real} = DefaultPrealloc{T}()
-
-"""Default precalc function."""
-precalculate(sim_method::SimulationMethod, backend::KA.Backend, seq::DiscreteSequence{T}, parts::Vector{UnitRange{S}}, excitation_bool::Vector{Bool}) where {T<:Real,S<:Integer} = DefaultPrecalc{T}()
+prealloc(sim_method::SimulationMethod, backend::KA.Backend, obj::Phantom{T}, M::Mag{T}, max_block_length::Integer, groupsize) where {T<:Real} = DefaultPrealloc{T}()
 
 include("BlochSimple/BlochSimple.jl")
-include("Bloch/BlochCPU.jl")
-include("Bloch/BlochGPU.jl")
+include("Bloch/cpu/BlochCPU.jl")
+include("Bloch/gpu/BlochGPU.jl")
 include("BlochDict/BlochDict.jl")

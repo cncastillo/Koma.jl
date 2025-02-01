@@ -3,6 +3,7 @@ module KomaMRICore
 # General
 import Base.*, Base.abs
 import KernelAbstractions as KA
+import AcceleratedKernels as AK
 using Reexport
 using ThreadsX
 # Printing

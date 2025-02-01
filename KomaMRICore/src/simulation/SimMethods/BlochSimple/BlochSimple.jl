@@ -27,6 +27,7 @@ function run_spin_precession!(
     sig::AbstractArray{Complex{T}},
     M::Mag{T},
     sim_method::SimulationMethod,
+    groupsize,
     backend::KA.Backend,
     prealloc::PreallocResult
 ) where {T<:Real}
@@ -76,6 +77,7 @@ function run_spin_excitation!(
     sig::AbstractArray{Complex{T}},
     M::Mag{T},
     sim_method::SimulationMethod,
+    groupsize,
     backend::KA.Backend,
     prealloc::PreallocResult
 ) where {T<:Real}
