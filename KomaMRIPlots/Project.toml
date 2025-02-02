@@ -20,7 +20,6 @@ KomaPlotsPlutoPlotlyExt = "PlutoPlotly"
 
 [compat]
 Interpolations = "0.13, 0.14, 0.15"
-Kaleido_jll = "0.1"
 KomaMRIBase = "0.9"
 MAT = "0.10"
 PlotlyJS = "0.18"
